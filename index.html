@@ -152,11 +152,11 @@
                 </div>
             </div>
             <!-- About Section Button-->
-            <div class="text-center mt-4">
+            <!-- <div class="text-center mt-4">
                 <a class="btn btn-xl btn-outline-light" href="https://startbootstrap.com/theme/freelancer/">
                     <i class="fas fa-download me-2"></i> Free Download!
                 </a>
-            </div>
+            </div> -->
         </div>
     </section>
 
@@ -236,8 +236,16 @@
                                         </button>
                                     </div>
                                 </div>
+                                <!-- ALERT -->
+                                <div class="alert alert-success fade show d-none polinus-alert" role="alert">
+                                    <strong>Terima Kasih!</strong> telah menghadiri semprop saya, semoga harimu menyenangkan🤩😁.
+                                </div>
+                                <!-- LOADING PROCES -->
+                                <div class="spinner-grow text-success d-none loading-proces" style="width: 10rem; height: 10rem;" role="status">
+                                    <span class="visually-hidden">Loading...</span>
+                                </div>
                                 <!-- FORM POLINUS -->
-                                <form action="" class="justify-content-center d-none" id="formpolinus">
+                                <form name="presensi-polinus" class="justify-content-center d-none" id="formpolinus">
                                     <div class="form-floating mb-5">
                                         <input type="email" class="form-control" id="email" placeholder="email" name="email" required>
                                         <label for="email">Alamat Email</label>
@@ -316,7 +324,7 @@
                                             </button>
                                         </div>
                                         <div class="col-4">
-                                            <button class="btn btn-primary" type="submit">
+                                            <button class="btn btn-primary btn-precen" type="submit">
                                             <i class=" fas fa-share fa-fw "></i> SUBMIT
                                         </button>
                                         </div>
@@ -440,7 +448,7 @@
     <script>
         var cR = new Date;
 
-        document.getElementById("copyRight ").innerHTML = "Copyright &copy; Naufal_Amajid " + (cR.getFullYear());
+        document.getElementById("copyRight").innerHTML = "Copyright &copy; Naufal_Amajid " + (cR.getFullYear());
 
         function polinus() {
             const target = document.querySelector('#formpolinus');
@@ -473,6 +481,30 @@
             btnConfirm.classList.toggle('d-none')
             target.classList.toggle('d-none')
         }
+
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbzaCgn3e5rGLKqco6-9L3nBHo8Ctz3aPGmOfgGLOIUquoPtuYCvaPtiD-4VAnEwUGOOpQ/exec';
+        const form = document.forms['presensi-polinus'];
+        const precenpolinus = document.querySelector('#formpolinus');
+        const btnconfirmed = document.querySelector('.btn-confirm');
+        const loadingproces = document.querySelector('.loading-proces');
+        const alertsuccess = document.querySelector('.polinus-alert');
+
+        form.addEventListener('submit', e => {
+            e.preventDefault();
+            //ketika tombol submit diklik maka akan muncul loading hilangkan form
+            loadingproces.classList.toggle('d-none');
+            precenpolinus.classList.toggle('d-none');
+            fetch(scriptURL, {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+                .then(response => {
+                    alertsuccess.classList.toggle('d-none');
+                    loadingproces.classList.toggle('d-none');
+                    console.log('Success!', response);
+                })
+                .catch(error => console.error('Error!', error.message))
+        });
     </script>
     <!-- * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * *-->
     <!-- * *                               SB Forms JS                               * *-->
