@@ -294,7 +294,7 @@
                                     </div>
                                 </form>
                                 <!-- FORM LAINNYA -->
-                                <form action="" class="justify-content-center d-none" id="formlainnya">
+                                <form name="presensi-other" class="justify-content-center d-none" id="formlainnya">
                                     <div class="form-floating mb-5">
                                         <input type="email" class="form-control" id="email" placeholder="email" name="email" required>
                                         <label for="email">Alamat Email</label>
@@ -501,6 +501,31 @@
                 .then(response => {
                     alertsuccess.classList.toggle('d-none');
                     loadingproces.classList.toggle('d-none');
+                    console.log('Success!', response);
+                })
+                .catch(error => console.error('Error!', error.message))
+        });
+
+
+        const scriptURLother = 'https://script.google.com/macros/s/AKfycbwVWIq_rIwY3mtT-diMdsDDm7AmdI1jFj8WhYNw6GNV3RGIR4O4GEHwYIORj-oMlCXIeQ/exec';
+        const formother = document.forms['presensi-other'];
+        const precenother = document.querySelector('#formlainnya');
+        const btnconfirmedother = document.querySelector('.btn-confirm');
+        const loadingprocesother = document.querySelector('.loading-proces');
+        const alertsuccessother = document.querySelector('.polinus-alert');
+
+        formother.addEventListener('submit', e => {
+            e.preventDefault();
+            //ketika tombol submit diklik maka akan muncul loading hilangkan form
+            loadingprocesother.classList.toggle('d-none');
+            precenother.classList.toggle('d-none');
+            fetch(scriptURLother, {
+                    method: 'POST',
+                    body: new FormData(formother)
+                })
+                .then(response => {
+                    alertsuccessother.classList.toggle('d-none');
+                    loadingprocesother.classList.toggle('d-none');
                     console.log('Success!', response);
                 })
                 .catch(error => console.error('Error!', error.message))
